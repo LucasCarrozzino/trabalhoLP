@@ -8,14 +8,15 @@ normExp exp
     | null exp = []
     | head exp == '(' = normExp (tail exp)
     | head exp == ')' = normExp (tail exp)
-    | head exp == ';' = ";" : normExp (tail exp)
-    | head exp == '?' = "?" : normExp (tail exp)
-    | head exp == '*' = "*" : normExp (tail exp)
-    | head exp == '>' = ">" : normExp (tail exp)
-    | head exp == '<' = "<" : normExp (tail exp)
-    | head exp == '[' = "[" : normExp (tail exp)
-    | head exp == ']' = "]" : normExp (tail exp)
+    | head exp == ';' = ";" : (normExp (tail (tail exp)))
+    | head exp == '?' = "?" : (normExp (tail (tail exp)))
+    | head exp == '*' = "*" : (normExp (tail (tail exp)))
+    | head exp == '>' = ">" : (normExp (tail (tail exp)))
+    | head exp == '<' = "<" : (normExp (tail (tail exp)))
+    | head exp == '[' = "[" : (normExp (tail (tail exp)))
+    | head exp == ']' = "]" : (normExp (tail (tail exp)))
     | otherwise = (head exp :[]) : normExp (tail exp)
+
 
 
 main = do
