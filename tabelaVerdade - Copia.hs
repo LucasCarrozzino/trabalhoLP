@@ -24,7 +24,6 @@ normExp exp
     | head exp == '|' = "|" : (normExp (tail (tail exp)))
     | head exp == '-' = ">" : (normExp (tail (tail exp)))
     | head exp == '<' = "<" : (normExp (tail (tail (tail exp))))
-    | head exp == '~' = "~" : normExp (tail exp)
     | otherwise = (head exp :[]) : normExp (tail exp)
 
 normalized_exp = normExp entry
