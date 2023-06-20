@@ -16,7 +16,7 @@ normExp exp
     | head exp == '[' = "[" : (normExp (tail (tail exp)))
     | head exp == ']' = "]" : (normExp (tail (tail exp)))
     | head exp == 'v' = "v" : (normExp (tail (tail exp)))
-    | head exp == '~' = "~" : (normExp (tail (tail exp)))
+    | head exp == '-' = "-" : (normExp (tail (tail exp)))
     | otherwise = (head exp :[]) : normExp (tail exp)
 
 
