@@ -1,0 +1,8 @@
+$ ghci VerificadordePdls.hs
+
+*VerificadordePdls> verificaFramePDL (grafo) (arvore)
+i.e verificaFramePDL [[(0, "alpha"), (1, "beta")]] (criaArvore "Arvore (Arvore Vazia \"alpha\" Vazia) \";\" (Arvore Vazia \"beta\" Vazia)")
+
+ou
+
+$ runhaskell Testes_Hardcoded.hs
