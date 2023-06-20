@@ -7,7 +7,7 @@ module Estrutura.Grafo (
   Vertice
 ) where
 
-type Destino = Int
+type Destino = String
 type Programa = String
 type Vertice = [(Destino, Programa)]
 type Grafo = [Vertice]
