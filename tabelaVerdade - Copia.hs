@@ -17,6 +17,10 @@ normExp exp
     | head exp == ']' = "]" : (normExp (tail (tail exp)))
     | otherwise = (head exp :[]) : normExp (tail exp)
 
+resultado :: [[char]] -> String
+resuntado lista
+    | null lista = "invalido em:" + lista
+    | otherwise = "Frame Valido"
 
 
 main = do
