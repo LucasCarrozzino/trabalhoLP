@@ -22,6 +22,8 @@ normExp exp
 
 
 main = do
-    entrada <- getLine
-    let norm = normExp entrada
+    proposicao <- getLine
+    programas <- getLine
+    --let norm/grafo = normPro programas
+    let norm = normExp proposicao
     print norm
