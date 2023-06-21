@@ -1,15 +1,15 @@
 module Tree
 (
   Tree(..),
-  getSimbol,
+  getSymbol,
   getLeft,
   getRight,
   isBase,
   buildTree
 ) where
 
-data Tree = Empty 
-  | Tree Tree String Tree 
+data Tree = Empty
+  | Tree Tree String Tree
   deriving (Show, Read, Eq)
 
 isBase :: Tree -> Bool
@@ -21,8 +21,8 @@ getLeft (Tree getLeft _ _) = getLeft
 getRight :: Tree -> Tree
 getRight (Tree _ _ getRight) = getRight
 
-getSimbol:: Tree -> String
-getSimbol(Tree _ getSimbol_) = getSimbol
+getSymbol:: Tree -> String
+getSymbol(Tree _ getSymbol _) = getSymbol
 
 buildTree :: String -> Tree
 buildTree str = read str :: Tree
