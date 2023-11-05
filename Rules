@@ -1,6 +1,11 @@
-Entrada: (a) uma grade de tamanho definido pelo usuário onde cada célula possui três estados possíveis: vivo, morto e zumbi e (b) um valor natural "n" que denota a quantidade máxima de iterações desejadas.
+O que deve ser feito:
 
-Saída: (c) a grade resultante após "n" iterações; caso a partir de determinado ponto não haja mais alterações, deve ser informada a quantidade de passos até o sistema estabilizar.
+Perguntar ao usuário o tamanho do tabuleiro.
+Criar tabuleiro onde cada célula pode ser viva,morta ou zumbi.
+Perguntar ao usuário a quantidade máxima de interações(tempo/turno limite)
+Colocar no while/for condição de encerrar se o número de interações/turnos máximos for alcançado.
+
+Rodar as interações:
 
 Regras
 * Se uma célula morta possui exatamente três células vivas adjacentes (horizontal, vertical ou diagonal), ela estará viva na próxima iteração. (reprodução)
@@ -8,3 +13,6 @@ Regras
 * Se uma célula viva possui menos do que duas células vivas e nenhuma zumbi adjacentes (horizontal, vertical ou diagonal), ela estará morta na próxima iteração. (subpopulação)
 * Se uma célula viva possui mais do que três células vivas e nenhuma zumbi adjacentes (horizontal, vertical ou diagonal), ela estará morta na próxima iteração. (superpopulação)
 * Se uma célula zumbi não possui células vivas adjacentes (horizontal, vertical ou diagonal), ela estará morta na próxima iteração. (inanição)
+
+Imprima o tabuleiro.
+Se depois de um certo numero de interações o tabuleiro não mudou mais,imprimir tmb a quantidade de passos  usada para chegar nessa estabilidade.
