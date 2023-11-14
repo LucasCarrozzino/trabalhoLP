@@ -1,9 +1,5 @@
 O que deve ser feito:
 
-Perguntar ao usuário o tamanho do tabuleiro.
-Criar tabuleiro onde cada célula pode ser viva,morta ou zumbi.
-Perguntar ao usuário a quantidade máxima de interações(tempo/turno limite)
-Colocar no while/for condição de encerrar se o número de interações/turnos máximos for alcançado.
 
 Rodar as interações:
 
