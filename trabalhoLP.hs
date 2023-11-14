@@ -30,6 +30,13 @@ createMatrix (row:rest) = splitByChar '|' row : createMatrix rest
 printMatrix :: [[String]] -> IO ()
 printMatrix matrix = mapM_ (putStrLn . unwords) matrix
 
+-- Função para simular vida
+dustToDust :: Int -> Int -> [[String]] -> Int -> Maybe [[String]]
+dustToDust tAtual tMax mundo tEstavel
+  | tAtual <= tMax = dustToDust (tAtual+1) tMax mundo tAtual -- Deve alterar mundo e ver se tEstavel vira tAtual ou permanece o mesmo
+  | tAtual > tMax = return mundo --Ele deve dar um print em tEstavel
+  | otherwise = Nothing
+
 main :: IO ()
 main = do
     putStrLn "Informe o tabuleiro"
@@ -37,7 +44,15 @@ main = do
     case createMatrixFromString input of
         Just matrix -> do
             putStrLn "carregando tabuleiro..."
-            -- printMatrix matrix
+            printMatrix matrix
+            putStrLn "Informe o número máximo de interações"
+            limit <- getLine
+            case dustToDust 0 (read limit) matrix 0 of
+                Just tabuleiro -> do
+                    printMatrix tabuleiro
+                Nothing -> do
+                    putStrLn "Por favor, informar um número natural"
+                    main
         Nothing -> do
             putStrLn "Por favor, informar um tabuleiro no formato suportado"
             main
