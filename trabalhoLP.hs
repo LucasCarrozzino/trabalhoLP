@@ -56,3 +56,7 @@ main = do
         Nothing -> do
             putStrLn "Por favor, informar um tabuleiro no formato suportado"
             main
+
+-- função ver(matriz, aux)
+-- aux.tamanho ==matriz.tamanho?return aux
+-- (proxima coord de aux)  = matrix[x==2?x:0][x==2?y:y+1]

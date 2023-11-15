@@ -12,3 +12,12 @@ Regras
 
 Imprima o tabuleiro.
 Se depois de um certo numero de interações o tabuleiro não mudou mais,imprimir tmb a quantidade de passos  usada para chegar nessa estabilidade.
+
+
+entrada:
+
+Informe o tabuleiro
+a|a|a;b|b|b
+carregando tabuleiro...
+a a a
+b b b
