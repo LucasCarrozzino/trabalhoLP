@@ -31,7 +31,8 @@ createMatrix (row:rest) = splitByChar '|' row : createMatrix rest
 printMatrix :: [[String]] -> IO ()
 printMatrix matrix = mapM_ (putStrLn . unwords) matrix
 
--- Função para simular vida
+-- Função para simular as interações e imprimir o tabuleiro no estado final e 
+--a quantidade de passos necessários para ele ser estabilizado
 dustToDust :: Int -> Int ->  [[String]] -> Int -> IO ()
 dustToDust tAtual tMax mundo tEstavel
   | tAtual <= tMax = if seeAll mundo [[""]] 0 0 == mundo then dustToDust (tAtual+1) tMax (seeAll mundo [[""]] 0 0) tEstavel else dustToDust (tAtual+1) tMax (seeAll mundo [[""]] 0 0) tAtual
@@ -41,11 +42,13 @@ dustToDust tAtual tMax mundo tEstavel
      putStrLn "A quantidade de interações necessárias para o tabuleiro se estabilizar foi "
      print (tEstavel + 1)
 
+--Varre o tabuleiro e contrói a próxima interação do mesmo
 seeAll :: [[String]] -> [[String]] -> Int -> Int ->  [[String]]
 seeAll mundo futuro x y
   | length mundo == length futuro =  futuro
   | length mundo > length futuro = if x < length mundo then seeAll  mundo (futuro <> catBox mundo x y) (x + 1) y else  seeAll  mundo (futuro <> catBox mundo x y) 0 (y + 1)
 
+--Ve qual deve ser o próximo estado de uma célula
 catBox :: [[String]] -> Int -> Int -> [[String]]
 catBox mundo x y = [["m"]]--falta checar quais os estados vizinhos e compara-los para saber qual letra retornar
 
