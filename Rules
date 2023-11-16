@@ -3,14 +3,11 @@
 --Rodar as interações:
 
 --Regras
---* Se uma célula morta possui exatamente três células vivas adjacentes (horizontal, vertical ou diagonal), ela estará viva na próxima --iteração. (reprodução)
---* Se uma célula viva possui ao menos uma célula zumbi adjacente (horizontal, vertical ou diagonal), ela tornar-se-á zumbi na próxima --iteração. (infecção)
---* Se uma célula viva possui menos do que duas células vivas e nenhuma zumbi adjacentes (horizontal, vertical ou diagonal), ela estará --morta na próxima iteração. (subpopulação)
---* Se uma célula viva possui mais do que três células vivas e nenhuma zumbi adjacentes (horizontal, vertical ou diagonal), ela estará --morta na próxima iteração. (superpopulação)
---* Se uma célula zumbi não possui células vivas adjacentes (horizontal, vertical ou diagonal), ela estará morta na próxima iteração. --(inanição)
-
---Imprima tEstavel
-
+-- * Se uma célula morta possui exatamente três células vivas adjacentes (horizontal, vertical ou diagonal), ela estará viva na próxima iteração. (reprodução)
+-- * Se uma célula viva possui ao menos uma célula zumbi adjacente (horizontal, vertical ou diagonal), ela tornar-se-á zumbi na próxima iteração. (infecção)
+-- * Se uma célula viva possui menos do que duas células vivas e nenhuma zumbi adjacentes (horizontal, vertical ou diagonal), ela estará morta na próxima iteração. (subpopulação)
+-- * Se uma célula viva possui mais do que três células vivas e nenhuma zumbi adjacentes (horizontal, vertical ou diagonal), ela estará morta na próxima iteração. (superpopulação)
+-- * Se uma célula zumbi não possui células vivas adjacentes (horizontal, vertical ou diagonal), ela estará morta na próxima iteração. (inanição)
 --entrada:
 
 --Informe o tabuleiro

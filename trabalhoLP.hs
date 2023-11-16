@@ -1,3 +1,4 @@
+
 -- Função para dividir uma string em elementos separados por um caractere
 splitByChar :: Char -> String -> [String]
 splitByChar _ [] = []
@@ -31,11 +32,19 @@ printMatrix :: [[String]] -> IO ()
 printMatrix matrix = mapM_ (putStrLn . unwords) matrix
 
 -- Função para simular vida
-dustToDust :: Int -> Int -> [[String]] -> Int -> Maybe [[String]]
+dustToDust :: Int -> Int ->  [[String]] -> Int -> IO ()
 dustToDust tAtual tMax mundo tEstavel
-  | tAtual <= tMax = dustToDust (tAtual+1) tMax mundo tAtual -- Deve alterar mundo e ver se tEstavel vira tAtual ou permanece o mesmo
-  | tAtual > tMax = return mundo --Ele deve dar um print em tEstavel
-  | otherwise = Nothing
+  | tAtual <= tMax = if seeAll mundo [[""]] == mundo then dustToDust (tAtual+1) tMax (seeAll mundo [[""]]) tEstavel else dustToDust (tAtual+1) tMax (seeAll mundo [[""]]) tAtual
+  | otherwise = do
+     putStrLn "A versão final do tabuleiro:"
+     printMatrix mundo
+     putStrLn "A quantidade de interações necessárias para o tabuleiro se estabilizar foi "
+     print (tEstavel + 1)
+
+seeAll :: [[String]] -> [[String]] ->  [[String]]
+seeAll mundo futuro
+  | length mundo == length futuro =  futuro
+  | length mundo > length futuro = seeAll  mundo (futuro <> [head mundo])
 
 main :: IO ()
 main = do
@@ -47,12 +56,7 @@ main = do
             printMatrix matrix
             putStrLn "Informe o número máximo de interações"
             limit <- getLine
-            case dustToDust 0 (read limit) matrix 0 of
-                Just tabuleiro -> do
-                    printMatrix tabuleiro
-                Nothing -> do
-                    putStrLn "Por favor, informar um número natural"
-                    main
+            dustToDust 0 (read limit) matrix 0
         Nothing -> do
             putStrLn "Por favor, informar um tabuleiro no formato suportado"
             main
