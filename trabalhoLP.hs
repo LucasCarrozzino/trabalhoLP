@@ -48,7 +48,7 @@ seeAll mundo futuro x y
   | length mundo == length futuro =  futuro
   | length mundo > length futuro = if x < length mundo then seeAll  mundo (futuro <> catBox mundo x y) (x + 1) y else  seeAll  mundo (futuro <> catBox mundo x y) 0 (y + 1)
 
---Ve qual deve ser o próximo estado de uma célula
+--Vê qual deve ser o próximo estado de uma célula
 catBox :: [[String]] -> Int -> Int -> [[String]]
 catBox mundo x y = [["m"]]--falta checar quais os estados vizinhos e compara-los para saber qual letra retornar
 
