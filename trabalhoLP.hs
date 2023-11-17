@@ -82,8 +82,8 @@ adjacentCells x y =
 --Insere a matrix no lugar certo
 insertMat :: [[String]] -> [[String]] -> Int -> Int -> [[String]]
 insertMat futuro cel x y
-  | futuro == [[""]] = cel
-  | length futuro < (x + 1) = futuro <> cel
+  | head futuro == [""] = cel
+  | y == 0 = futuro <> cel
   | otherwise = if x == 0 then [head futuro <> head cel] <> tail futuro else  if x == length futuro -1 then init futuro <> [futuro!!x <> head cel] else take x futuro <> [futuro!!x <> head cel] <> drop (x + 1) futuro 
 
 main :: IO ()
