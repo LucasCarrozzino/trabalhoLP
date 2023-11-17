@@ -67,6 +67,13 @@ countNeighbors mundo x y value =
     let neighbors = filter (\(i, j) -> getValue mundo i j == value) (adjacentCells x y)
     in length neighbors
 
+-- Função para obter o valor de uma célula em determinadas coordenadas
+getValue :: [[String]] -> Int -> Int -> String
+getValue mundo x y =
+    if x >= 0 && y >= 0 && x < length mundo && y < length (head mundo)
+        then mundo !! x !! y
+        else ""
+
 main :: IO ()
 main = do
     putStrLn "Informe o tabuleiro"
