@@ -22,12 +22,6 @@ createMatrixFromString input = do
         then return matrix
         else Nothing
 
--- Função para contar o número de células vizinhas com um valor específico
-countNeighbors :: [[String]] -> Int -> Int -> String -> Int
-countNeighbors mundo x y value =
-    let neighbors = filter (\(i, j) -> getValue mundo i j == value) (adjacentCells x y)
-    in length neighbors
-
 -- Função auxiliar para criar a matriz
 createMatrix :: [String] -> [[String]]
 createMatrix [] = []
@@ -56,7 +50,22 @@ seeAll mundo futuro x y
 
 --Vê qual deve ser o próximo estado de uma célula
 catBox :: [[String]] -> Int -> Int -> [[String]]
-catBox mundo x y = [["m"]]--falta checar quais os estados vizinhos e compara-los para saber qual letra retornar
+catBox mundo x y
+    | currentValue == "V" && zombieNeighbors > 0 = [["Z"]]
+    | currentValue == "V" && (liveNeighbors < 2 || liveNeighbors > 3) = [["0"]]
+    | currentValue == "M" && liveNeighbors == 3 = [["V"]]
+    | currentValue == "Z" && liveNeighbors == 0 = [["M"]]
+    | otherwise = [[currentValue]]
+  where
+    currentValue = getValue mundo x y
+    liveNeighbors = countNeighbors mundo x y "V"
+    zombieNeighbors = countNeighbors mundo x y "Z"
+
+-- Função para contar o número de células vizinhas com um valor específico
+countNeighbors :: [[String]] -> Int -> Int -> String -> Int
+countNeighbors mundo x y value =
+    let neighbors = filter (\(i, j) -> getValue mundo i j == value) (adjacentCells x y)
+    in length neighbors
 
 main :: IO ()
 main = do
