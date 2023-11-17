@@ -74,6 +74,11 @@ getValue mundo x y =
         then mundo !! x !! y
         else ""
 
+-- Função para obter as coordenadas das células adjacentes
+adjacentCells :: Int -> Int -> [(Int, Int)]
+adjacentCells x y =
+    [(i, j) | i <- [x - 1 .. x + 1], j <- [y - 1 .. y + 1], i /= x || j /= y]
+
 --Insere a matrix no lugar certo
 insertMat :: [[String]] -> [[String]] -> Int -> Int -> [[String]]
 insertMat futuro cel x y
