@@ -84,7 +84,7 @@ insertMat :: [[String]] -> [[String]] -> Int -> Int -> [[String]]
 insertMat futuro cel x y
   | length futuro == 1 && length (head futuro) == 1 = cel
   | length futuro < (x + 1) = futuro <> cel
-  | otherwise = futuro
+  | otherwise = if x == 0 then [head futuro <> head cel] <> tail futuro else  if x == length futuro -1 then init futuro <> [futuro!!x <> head cel] else [head futuro] <> [futuro!!x <> head cel] <> [last futuro]
 
 main :: IO ()
 main = do
