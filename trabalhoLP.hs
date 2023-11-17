@@ -31,7 +31,7 @@ createMatrix (row:rest) = splitByChar '|' row : createMatrix rest
 printMatrix :: [[String]] -> IO ()
 printMatrix matrix = mapM_ (putStrLn . unwords) matrix
 
--- Função para simular as interações e imprimir o tabuleiro no estado final e
+-- Função para simular as interações e imprimir o tabuleiro no estado final e 
 --a quantidade de passos necessários para ele ser estabilizado
 dustToDust :: Int -> Int ->  [[String]] -> Int -> IO ()--Erro: tEstavel sempre = 0
 dustToDust tAtual tMax mundo tEstavel
@@ -46,7 +46,7 @@ dustToDust tAtual tMax mundo tEstavel
 seeAll :: [[String]] -> [[String]] -> Int -> Int ->  [[String]]--Erro:futuro <> [["m"]]
 seeAll mundo futuro x y
   | length mundo == length futuro && length (mundo !! (length mundo - 1)) == length (futuro !! (length futuro - 1)) =  futuro
-  | otherwise = if x < length mundo then seeAll  mundo (futuro  <> catBox mundo x y) (x + 1) y else  seeAll  mundo (futuro <> catBox mundo x y) 0 (y + 1)
+  | otherwise = if x < length mundo then seeAll  mundo (insertMat futuro (catBox mundo x y) x y) (x + 1) y else  seeAll  mundo (insertMat futuro (catBox mundo x y) x y) 0 (y + 1)
 
 --Vê qual deve ser o próximo estado de uma célula
 catBox :: [[String]] -> Int -> Int -> [[String]]
@@ -73,6 +73,13 @@ getValue mundo x y =
     if x >= 0 && y >= 0 && x < length mundo && y < length (head mundo)
         then mundo !! x !! y
         else ""
+
+--Insere a matrix no lugar certo
+insertMat :: [[String]] -> [[String]] -> Int -> Int -> [[String]]
+insertMat futuro cel x y
+  | length futuro == 1 && length (head futuro) == 1 = cel
+  | length futuro < (x + 1) = futuro <> cel
+  | otherwise = futuro
 
 main :: IO ()
 main = do
