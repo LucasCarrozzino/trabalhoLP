@@ -46,7 +46,7 @@ dustToDust tAtual tMax mundo tEstavel
 seeAll :: [[String]] -> [[String]] -> Int -> Int ->  [[String]]
 seeAll mundo futuro x y
   | length mundo <= x || length (last mundo) <= y =  futuro
-  | otherwise = if x < length mundo then seeAll  mundo (insertMat futuro (catBox mundo x y) x y) (x + 1) y else  seeAll  mundo (insertMat futuro (catBox mundo x y) x y) 0 (y + 1)
+  | otherwise = if x < length mundo then seeAll  mundo (insertMat futuro (catBox mundo x y) x y) x (y + 1) else  seeAll  mundo (insertMat futuro (catBox mundo x y) x y) (x + 1) 0
 
 --Vê qual deve ser o próximo estado de uma célula
 catBox :: [[String]] -> Int -> Int -> [[String]]
@@ -84,7 +84,7 @@ insertMat :: [[String]] -> [[String]] -> Int -> Int -> [[String]]
 insertMat futuro cel x y
   | head futuro == [""] = cel
   | y == 0 = futuro <> cel
-  | otherwise = if x == 0 then [head futuro <> head cel] <> tail futuro else  if x == length futuro -1 then init futuro <> [futuro!!x <> head cel] else take x futuro <> [futuro!!x <> head cel] <> drop (x + 1) futuro 
+  | otherwise = init futuro <> [futuro!!x <> head cel]
 
 main :: IO ()
 main = do
