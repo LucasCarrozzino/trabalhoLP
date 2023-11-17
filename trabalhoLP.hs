@@ -22,6 +22,12 @@ createMatrixFromString input = do
         then return matrix
         else Nothing
 
+-- Função para contar o número de células vizinhas com um valor específico
+countNeighbors :: [[String]] -> Int -> Int -> String -> Int
+countNeighbors mundo x y value =
+    let neighbors = filter (\(i, j) -> getValue mundo i j == value) (adjacentCells x y)
+    in length neighbors
+
 -- Função auxiliar para criar a matriz
 createMatrix :: [String] -> [[String]]
 createMatrix [] = []
@@ -31,7 +37,7 @@ createMatrix (row:rest) = splitByChar '|' row : createMatrix rest
 printMatrix :: [[String]] -> IO ()
 printMatrix matrix = mapM_ (putStrLn . unwords) matrix
 
--- Função para simular as interações e imprimir o tabuleiro no estado final e 
+-- Função para simular as interações e imprimir o tabuleiro no estado final e
 --a quantidade de passos necessários para ele ser estabilizado
 dustToDust :: Int -> Int ->  [[String]] -> Int -> IO ()--Erro: tEstavel sempre = 0
 dustToDust tAtual tMax mundo tEstavel
