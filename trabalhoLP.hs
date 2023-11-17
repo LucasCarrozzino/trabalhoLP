@@ -33,7 +33,7 @@ printMatrix matrix = mapM_ (putStrLn . unwords) matrix
 
 -- Função para simular as interações e imprimir o tabuleiro no estado final e 
 --a quantidade de passos necessários para ele ser estabilizado
-dustToDust :: Int -> Int ->  [[String]] -> Int -> IO ()--Erro: tEstavel sempre = 0
+dustToDust :: Int -> Int ->  [[String]] -> Int -> IO ()--Erro: tEstavel
 dustToDust tAtual tMax mundo tEstavel
   | tAtual <= tMax = if seeAll mundo [[""]] 0 0 == mundo then dustToDust (tAtual+1) tMax (seeAll mundo [[""]] 0 0) tEstavel else dustToDust (tAtual+1) tMax (seeAll mundo [[""]] 0 0) tAtual
   | otherwise = do
@@ -43,7 +43,7 @@ dustToDust tAtual tMax mundo tEstavel
      print tEstavel
 
 --Varre o tabuleiro e contrói a próxima interação do mesmo
-seeAll :: [[String]] -> [[String]] -> Int -> Int ->  [[String]]--Erro:futuro <> [["m"]]
+seeAll :: [[String]] -> [[String]] -> Int -> Int ->  [[String]]
 seeAll mundo futuro x y
   | length mundo == length futuro && length (mundo !! (length mundo - 1)) == length (futuro !! (length futuro - 1)) =  futuro
   | otherwise = if x < length mundo then seeAll  mundo (insertMat futuro (catBox mundo x y) x y) (x + 1) y else  seeAll  mundo (insertMat futuro (catBox mundo x y) x y) 0 (y + 1)
@@ -84,7 +84,7 @@ insertMat :: [[String]] -> [[String]] -> Int -> Int -> [[String]]
 insertMat futuro cel x y
   | length futuro == 1 && length (head futuro) == 1 = cel
   | length futuro < (x + 1) = futuro <> cel
-  | otherwise = if x == 0 then [head futuro <> head cel] <> tail futuro else  if x == length futuro -1 then init futuro <> [futuro!!x <> head cel] else [head futuro] <> [futuro!!x <> head cel] <> [last futuro]
+  | otherwise = if x == 0 then [head futuro <> head cel] <> tail futuro else  if x == length futuro -1 then init futuro <> [futuro!!x <> head cel] else take x futuro <> [futuro!!x <> head cel] <> drop (x + 1) futuro 
 
 main :: IO ()
 main = do
