@@ -35,18 +35,25 @@ printMatrix matrix = mapM_ (putStrLn . unwords) matrix
 --a quantidade de passos necessários para ele ser estabilizado
 dustToDust :: Int -> Int ->  [[String]] -> Int -> IO ()--Erro: tEstavel
 dustToDust tAtual tMax mundo tEstavel
-  | tAtual <= tMax = if check (seeAll mundo [[""]] 0 0) mundo 0 then dustToDust (tAtual+1) tMax (seeAll mundo [[""]] 0 0) tEstavel else dustToDust (tAtual+1) tMax (seeAll mundo [[""]] 0 0) tAtual
+  | tAtual < tMax = if check (seeAll mundo [[""]] 0 0) mundo 0 then dustToDust (tAtual+1) tMax (seeAll mundo [[""]] 0 0) tEstavel else dustToDust (tAtual+1) tMax (seeAll mundo [[""]] 0 0) tAtual
   | otherwise = do
      putStrLn "A versão final do tabuleiro:"
      printMatrix mundo
      putStrLn "A quantidade de interações necessárias para o tabuleiro se estabilizar foi "
-     print tEstavel
+     print (tEstavel + 1)
 
 --Função que checa se uma matrix é igual a outra
 check :: [[String]] -> [[String]] -> Int -> Bool
 check futuro mundo x
+  | x + 1 >= length mundo = check2 (mundo !! x) (futuro !! x) 0
+  | check2 (mundo !! x) (futuro !! x) 0 = check futuro mundo (x + 1)
+  | otherwise = False
+
+  --Função que checa se uma matrix é igual a outra
+check2 :: [String] -> [String] -> Int -> Bool
+check2 futuro mundo x
   | x + 1 >= length mundo = mundo !! x == futuro !! x
-  | mundo !! x == futuro !! x = check futuro mundo (x + 1)
+  | mundo !! x == futuro !! x = check2 futuro mundo (x + 1)
   | otherwise = False
 
 --Varre o tabuleiro e contrói a próxima interação do mesmo
@@ -105,7 +112,7 @@ main = do
             printMatrix matrix
             putStrLn "Informe o número máximo de interações"
             limit <- getLine
-            dustToDust 0 (read limit - 1) matrix 0
+            dustToDust 0 (read limit) matrix 0
         Nothing -> do
             putStrLn "Por favor, informar um tabuleiro no formato suportado"
             main
