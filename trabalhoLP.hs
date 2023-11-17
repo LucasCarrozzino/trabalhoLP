@@ -40,13 +40,13 @@ dustToDust tAtual tMax mundo tEstavel
      putStrLn "A versão final do tabuleiro:"
      printMatrix mundo
      putStrLn "A quantidade de interações necessárias para o tabuleiro se estabilizar foi "
-     print (tEstavel + 1)
+     print tEstavel
 
 --Varre o tabuleiro e contrói a próxima interação do mesmo
-seeAll :: [[String]] -> [[String]] -> Int -> Int ->  [[String]]--Erro:resultado sempre igual m;m
+seeAll :: [[String]] -> [[String]] -> Int -> Int ->  [[String]]--Erro:futuro <> [["m"]]
 seeAll mundo futuro x y
-  | length mundo == length futuro && length (head mundo) == length (head futuro) =  futuro
-  | otherwise = if x < length mundo then seeAll  mundo (futuro <> catBox mundo x y) (x + 1) y else  seeAll  mundo (futuro <> catBox mundo x y) 0 (y + 1)
+  | length mundo == length futuro && length (mundo !! (length mundo - 1)) == length (futuro !! (length futuro - 1)) =  futuro
+  | otherwise = if x < length mundo then seeAll  mundo (futuro  <> catBox mundo x y) (x + 1) y else  seeAll  mundo (futuro <> catBox mundo x y) 0 (y + 1)
 
 --Vê qual deve ser o próximo estado de uma célula
 catBox :: [[String]] -> Int -> Int -> [[String]]
