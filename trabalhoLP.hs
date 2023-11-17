@@ -35,24 +35,32 @@ printMatrix matrix = mapM_ (putStrLn . unwords) matrix
 --a quantidade de passos necessários para ele ser estabilizado
 dustToDust :: Int -> Int ->  [[String]] -> Int -> IO ()--Erro: tEstavel
 dustToDust tAtual tMax mundo tEstavel
-  | tAtual <= tMax = if seeAll mundo [[""]] 0 0 == mundo then dustToDust (tAtual+1) tMax (seeAll mundo [[""]] 0 0) tEstavel else dustToDust (tAtual+1) tMax (seeAll mundo [[""]] 0 0) tAtual
+  | tAtual <= tMax = if check (seeAll mundo [[""]] 0 0) mundo 0 then dustToDust (tAtual+1) tMax (seeAll mundo [[""]] 0 0) tEstavel else dustToDust (tAtual+1) tMax (seeAll mundo [[""]] 0 0) tAtual
   | otherwise = do
      putStrLn "A versão final do tabuleiro:"
      printMatrix mundo
      putStrLn "A quantidade de interações necessárias para o tabuleiro se estabilizar foi "
      print tEstavel
 
+--Função que checa se uma matrix é igual a outra
+check :: [[String]] -> [[String]] -> Int -> Bool
+check futuro mundo x
+  | x + 1 >= length mundo = mundo !! x == futuro !! x
+  | mundo !! x == futuro !! x = check futuro mundo (x + 1)
+  | otherwise = False
+
 --Varre o tabuleiro e contrói a próxima interação do mesmo
 seeAll :: [[String]] -> [[String]] -> Int -> Int ->  [[String]]
 seeAll mundo futuro x y
-  | length mundo <= x || length (last mundo) <= y =  futuro
-  | otherwise = if x < length mundo then seeAll  mundo (insertMat futuro (catBox mundo x y) x y) x (y + 1) else  seeAll  mundo (insertMat futuro (catBox mundo x y) x y) (x + 1) 0
+  | x < length mundo && y < length (mundo !! x) = seeAll  mundo (insertMat futuro (catBox mundo x y) x y) x (y + 1)
+  | x < length mundo = seeAll  mundo futuro (x + 1) 0
+  | otherwise = futuro
 
 --Vê qual deve ser o próximo estado de uma célula
 catBox :: [[String]] -> Int -> Int -> [[String]]
 catBox mundo x y
     | currentValue == "V" && zombieNeighbors > 0 = [["Z"]]
-    | currentValue == "V" && (liveNeighbors < 2 || liveNeighbors > 3) = [["0"]]
+    | currentValue == "V" && (liveNeighbors < 2 || liveNeighbors > 3) && zombieNeighbors < 1 = [["M"]]
     | currentValue == "M" && liveNeighbors == 3 = [["V"]]
     | currentValue == "Z" && liveNeighbors == 0 = [["M"]]
     | otherwise = [[currentValue]]
@@ -70,7 +78,7 @@ countNeighbors mundo x y value =
 -- Função para obter o valor de uma célula em determinadas coordenadas
 getValue :: [[String]] -> Int -> Int -> String
 getValue mundo x y =
-    if x >= 0 && y >= 0 && x < length mundo && y < length (head mundo)
+    if x >= 0 && y >= 0 && x < length mundo && y < length (mundo !! x)
         then mundo !! x !! y
         else ""
 
@@ -82,21 +90,22 @@ adjacentCells x y =
 --Insere a matrix no lugar certo
 insertMat :: [[String]] -> [[String]] -> Int -> Int -> [[String]]
 insertMat futuro cel x y
-  | head futuro == [""] = cel
-  | y == 0 = futuro <> cel
-  | otherwise = init futuro <> [futuro!!x <> head cel]
+  | x == 0 && y == 0 = cel
+  | y == 0 && x > 0 = futuro <> cel
+  | y > 0 && x == 0 =  [head futuro <> head cel]
+  | otherwise = init futuro <> [last futuro <> head cel]
 
 main :: IO ()
 main = do
     putStrLn "Informe o tabuleiro"
     input <- getLine
-    case createMatrixFromString input of
+    case createMatrixFromString  input of
         Just matrix -> do
             putStrLn "carregando tabuleiro..."
             printMatrix matrix
             putStrLn "Informe o número máximo de interações"
             limit <- getLine
-            dustToDust 0 (read limit) matrix 0
+            dustToDust 0 (read limit - 1) matrix 0
         Nothing -> do
             putStrLn "Por favor, informar um tabuleiro no formato suportado"
             main
